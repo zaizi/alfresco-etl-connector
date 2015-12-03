@@ -451,7 +451,13 @@ public class ContentImporterComponentBase
             // initialise list of content models to exclude from import
             if (binding == null || binding.getExcludedClasses() == null)
             {
-                this.excludedClasses = new QName[] { ContentModel.ASPECT_REFERENCEABLE, ContentModel.ASPECT_VERSIONABLE };
+                // ZAIZI-CUSTOM START
+                /*
+                 We want to be able to add the versionable aspect.
+                 this.excludedClasses = new QName[] { ContentModel.ASPECT_REFERENCEABLE, ContentModel.ASPECT_VERSIONABLE };
+                 */
+                this.excludedClasses = new QName[] { ContentModel.ASPECT_REFERENCEABLE};
+                // ZAIZI-CUSTOM END
             }
             else
             {
@@ -976,8 +982,16 @@ public class ContentImporterComponentBase
                 }
                 else
                 {
-                    // property ready to be set on Node creation / update
-                    boundProperties.put(property, value);
+                    // ZAIZI-CUSTOM START
+                    /* Zaizi commented.
+                    If the value of the property is empty, ignore it.
+                    */
+                    if(!value.equals(""))
+                    {
+                        // property ready to be set on Node creation / update
+                        boundProperties.put(property, value);
+                    }
+                    // ZAIZI-CUSTOM END
                 }
             }
             
@@ -1254,7 +1268,9 @@ public class ContentImporterComponentBase
                 }
 
                 // Create initial node (but, first disable behaviour for the node to be created)
-                Set<QName> disabledBehaviours = getDisabledBehaviours(node);
+                // ZAIZI-CUSTOM START
+                Set<QName> disabledBehaviours = new HashSet<QName>();/*getDisabledBehaviours(node); ZAIZI REMOVED. WE DON'T WANT THE BEHAVIORS TO BE DISABLED*/
+                // ZAIZI-CUSTOM END
                 List<QName> alreadyDisabledBehaviours = new ArrayList<QName>(); 
                 for (QName disabledBehaviour: disabledBehaviours)
                 {
@@ -1274,6 +1290,10 @@ public class ContentImporterComponentBase
                 {
                     initialProperties.put(ContentModel.PROP_NODE_UUID, node.getUUID());
                 }
+                // ZAIZI-CUSTOM START
+                // Use the name for the association
+                childQName = QName.createQName(NamespaceService.CONTENT_MODEL_1_0_URI, QName.createValidLocalName((String)initialProperties.get(ContentModel.PROP_NAME)));
+                // ZAIZI-CUSTOM END
                 
                 // Create Node
                 ChildAssociationRef assocRef = nodeService.createNode(parentRef, assocType, childQName, nodeType.getName(), initialProperties);

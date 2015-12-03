@@ -21,6 +21,7 @@ Copyright (C) 2008-2012 Open Wide SA
 	</target>
 
 	<target name="prepare" depends="init-project">
+		<delete dir="${alfresco.web.dir}" />
 		<delete dir="${build.dir}/export" />
 		<mkdir dir="${build.dir}/export" />
 		<mkdir dir="${build.dir}/export/WEB-INF" />
@@ -43,7 +44,7 @@ Copyright (C) 2008-2012 Open Wide SA
 			<manifest>
 				<attribute name="Built-By" value="${user.name}"/>
 				<section name="${project.name}">
-					<attribute name="Specification-Title" value="${project.name}${alfresco.version}"/>
+					<attribute name="Specification-Title" value="${project.name}-${alfresco.version}"/>
 					<attribute name="Specification-Version" value="${version}"/>
 					<attribute name="Specification-Vendor" value="Open Wide SA"/>
 					<attribute name="Implementation-Title" value="fr.openwide.talendalfresco"/>

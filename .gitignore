@@ -4,3 +4,5 @@ build
 *.zip
 *.swp
 .DS_Store
+etlconnector-client_2.0.jar
+.classpath

@@ -698,7 +698,13 @@ public class ViewParserBase implements Parser
         }            
         if (eventType == XmlPullParser.END_TAG)
         {
-            node.addProperty(propertyName, value);
+            // ZAIZI-CUSTOM START
+            // If the property is passed empty, don't add it to the node.
+            if(!value.equals(""))
+            {
+                node.addProperty(propertyName, value);
+            }
+            // ZAIZI-CUSTOM END
         }
         else
         {

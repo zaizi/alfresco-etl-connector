@@ -81,8 +81,8 @@ public class ContentImporterBinding extends ContentImporterConfiguration impleme
    }
 
    public QName[] getExcludedClasses() {
-      // classes exluded from import
-      return null;
+      // classes excluded from import
+       return new QName[] { ContentModel.ASPECT_REFERENCEABLE};
       // NB. same as return new QName[] { ContentModel.ASPECT_REFERENCEABLE, ContentModel.ASPECT_VERSIONABLE };
    }
 
